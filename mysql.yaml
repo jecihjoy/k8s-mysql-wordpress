@@ -12,7 +12,7 @@ spec:
     tier: mysql
   clusterIP: None
 ---
-apiVersion: v1
+apiVersion: v1 
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-volume-claim
@@ -23,9 +23,9 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 20Gi
 ---
-apiVersion: apps/v1
+apiVersion: apps/v1 
 kind: Deployment
 metadata:
   name: wp-mysql
@@ -48,8 +48,11 @@ spec:
       - image: mysql:5.6
         name: mysql
         env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: test123
+        - name: MYSQL-ROOT-PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-wp-secret
+              key: db-pass
         ports:
         - containerPort: 3306
           name: mysql
