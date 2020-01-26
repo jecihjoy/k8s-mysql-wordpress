@@ -10,7 +10,7 @@ spec:
   selector:
     app: wp
     tier: frontend
-  type: LoadBalancer
+  type: LoadBalancer #This ensures that the service is exposed to client application 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -50,8 +50,11 @@ spec:
         env:
         - name: DB_HOST
           value: wp-mysql
-        - name: DB_ROOT_PASSWORD
-          value: test123
+        - name: MYSQL-WP-PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-wp-secret
+              key: db-pass
         ports:
         - containerPort: 80
           name: wordpress

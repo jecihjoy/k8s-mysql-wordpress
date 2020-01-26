@@ -1,9 +1,10 @@
 ###Deploy wordpress and mysql using kubernetes
 Ensure you've installed minikube then run the following commands
 1. minikube start
-2. kubectl create -f volumes.yaml 
-3. kubectl create -f mysql.yaml 
-4. kubectl create -f wordpress.yaml
+2. kubectl create secret generic mysql-wp-secret --from-literal=db-pass=test123
+3. kubectl create -f volumes.yaml 
+4. kubectl create -f mysql.yaml 
+5. kubectl create -f wordpress.yaml
 
 This should setup all the volumes, services and pods(containers) needed.
 
